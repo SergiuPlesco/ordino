@@ -4,32 +4,11 @@ import { Roboto } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Form from "@/components/Form/Form";
 import ListItem from "@/components/ListItem/ListItem";
+import TasksList from "@/components/TasksList/TasksList";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400"] });
 
 export default function Home() {
-	const [isSaving, setIsSaving] = useState(false);
-	const [allTasks, setAllTasks] = useState([]);
-
-	useEffect(() => {
-		const savedTasks = JSON.parse(localStorage.getItem("tasks"));
-		if (savedTasks) {
-			setAllTasks(savedTasks);
-		}
-	}, []);
-
-	useEffect(() => {
-		if (isSaving) {
-			localStorage.setItem("tasks", JSON.stringify(allTasks));
-			setIsSaving(false);
-		}
-	}, [allTasks]);
-
-	const saveTask = (e) => {
-		e.preventDefault();
-		setIsSaving(true);
-		setAllTasks((current) => [...current, task]);
-	};
 	return (
 		<>
 			<Head>
@@ -40,16 +19,8 @@ export default function Home() {
 			</Head>
 			<main className={styles.main} style={roboto.style}>
 				<h1>Ordino App</h1>
-				<Form saveTask={saveTask} />
-				<ul>
-					{allTasks.map((task, index) => {
-						return (
-							<div key={index}>
-								<ListItem task={task} saveTask={saveTask} />
-							</div>
-						);
-					})}
-				</ul>
+				<Form />
+				<TasksList />
 			</main>
 		</>
 	);
