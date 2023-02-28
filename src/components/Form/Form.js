@@ -1,25 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import useLocalStorage from "@/hooks/useLocalStorage";
 
 const Form = () => {
-	const [allTasks, setAllTasks, , setIsSaving] = useLocalStorage();
-	const [value, setValue] = useState("");
+  const { setAllTasks, setIsSaving } = useLocalStorage();
+  const [value, setValue] = useState("");
 
-	const saveTask = (e) => {
-		e.preventDefault();
-		setIsSaving(true);
-		setAllTasks([...allTasks, value]);
-		setValue("");
-	};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSaving(true);
+    setAllTasks((currentList) => [...currentList, value]);
+    setValue("");
+  };
 
-	return (
-		<form>
-			<input type="text" name="task" value={value} onChange={(e) => setValue(e.target.value)} />
-			<button type="submit" onClick={saveTask}>
-				add
-			</button>
-		</form>
-	);
+  return (
+    <form>
+      <input
+        type="text"
+        name="task"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+      <button type="submit" onClick={handleSubmit}>
+        add
+      </button>
+    </form>
+  );
 };
 
 export default Form;
