@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import { Roboto } from "@next/font/google";
+import { Roboto } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Form from "@/components/Form/Form";
 import ListItem from "@/components/ListItem/ListItem";
