@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import useLocalStorage from "@/hooks/useLocalStorage";
 
-const Form = () => {
-  const { setAllTasks, setIsSaving } = useLocalStorage();
+const Form = ({ addTask }) => {
   const [value, setValue] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSaving(true);
-    setAllTasks((currentList) => [...currentList, value]);
+    addTask(value);
     setValue("");
   };
 
