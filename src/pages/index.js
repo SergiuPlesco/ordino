@@ -1,10 +1,7 @@
-import { useState, useEffect } from "react";
 import Head from "next/head";
 import { Roboto } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import Form from "@/components/Form/Form";
-import ListItem from "@/components/ListItem/ListItem";
-import TasksList from "@/components/TasksList/TasksList";
+import Tasks from "@/containers/Tasks/Tasks";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400"] });
 
@@ -19,8 +16,11 @@ export default function Home() {
 			</Head>
 			<main className={styles.main} style={roboto.style}>
 				<h1>Ordino App</h1>
-				<Form />
-				<TasksList />
+				<h4>
+					One hour of pure focus a day, on lever-moving tasks, is all you need to build the project
+					that will launch you into a life of meaning.
+				</h4>
+				<Tasks />
 			</main>
 		</>
 	);

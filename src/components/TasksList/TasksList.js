@@ -1,30 +1,19 @@
-import React, { useState, useEffect } from "react";
-import useLocalStorage from "@/hooks/useLocalStorage";
+import React from "react";
+
 import ListItem from "../ListItem/ListItem";
 
-const TasksList = () => {
-	console.log("render taskslist");
-
-	const [allTasks, setValue, isSaving] = useLocalStorage();
-	const [list, setList] = useState([]);
-	console.log(isSaving);
-	useEffect(() => {
-		if (allTasks) {
-			setList(allTasks);
-		}
-	}, [isSaving]);
-
-	return (
-		<ul>
-			{list.map((task, index) => {
-				return (
-					<div key={index}>
-						<ListItem task={task} />
-					</div>
-				);
-			})}
-		</ul>
-	);
+const TasksList = ({ allTasks = [], removeTask }) => {
+  return (
+    <ul>
+      {allTasks.map((task) => {
+        return (
+          <div key={task.id}>
+            <ListItem task={task} removeTask={removeTask} />
+          </div>
+        );
+      })}
+    </ul>
+  );
 };
 
 export default TasksList;

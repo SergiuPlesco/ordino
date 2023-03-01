@@ -1,24 +1,30 @@
 import React, { useState } from "react";
 import Form from "../Form/Form";
 
-const ListItem = ({ task, saveTask }) => {
-	const [isDeviding, setIsDeviding] = useState(false);
+const ListItem = ({ task, addTask, removeTask }) => {
+  const [isDeviding, setIsDeviding] = useState(false);
 
-	return (
-		<>
-			{" "}
-			<li
-				style={{
-					display: "flex",
-				}}
-			>
-				<p>{task}</p>
-				<button onClick={() => setIsDeviding(true)}>devide task</button>
-				{isDeviding && <button onClick={() => setIsDeviding(false)}>cancel</button>}
-			</li>
-			{isDeviding && <Form saveTask={saveTask} />}
-		</>
-	);
+  return (
+    <>
+      <li
+        style={{
+          display: "flex",
+        }}
+      >
+        <p>{task.value}</p>
+        {!isDeviding && (
+          <button onClick={() => setIsDeviding(true)}>devide </button>
+        )}
+        {!isDeviding && (
+          <button onClick={() => removeTask(task.id)}>delete </button>
+        )}
+        {isDeviding && (
+          <button onClick={() => setIsDeviding(false)}>cancel</button>
+        )}
+      </li>
+      {isDeviding && <Form addTask={addTask} />}
+    </>
+  );
 };
 
 export default ListItem;
