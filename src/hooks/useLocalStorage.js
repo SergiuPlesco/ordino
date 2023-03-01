@@ -5,7 +5,6 @@ const useLocalStorage = () => {
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    console.log("effect get item");
     const savedTasks = JSON.parse(localStorage.getItem("tasks"));
     if (savedTasks) {
       setAllTasks(savedTasks);
@@ -14,7 +13,6 @@ const useLocalStorage = () => {
 
   useEffect(() => {
     if (isSaving) {
-      console.log("effect set item", allTasks);
       localStorage.setItem("tasks", JSON.stringify(allTasks));
       setIsSaving(false);
     }
