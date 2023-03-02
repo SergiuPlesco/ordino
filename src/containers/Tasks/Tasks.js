@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Form from "@/components/Form/Form";
 import TasksList from "@/components/TasksList/TasksList";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import generateId from "@/utils/generateId";
@@ -8,13 +7,22 @@ const Tasks = () => {
   const { allTasks, setAllTasks, setIsSaving } = useLocalStorage();
   const [list, setList] = useState([]);
 
-  const addTask = (value) => {
+  const updateTask = (id, value) => {
     setIsSaving(true);
     setAllTasks((currentList) => [
-      ...currentList,
+      ...currentList.map((item) =>
+        item.id === id ? { ...item, value, isNew: false } : item
+      ),
+    ]);
+  };
+
+  const addListItem = () => {
+    setAllTasks((currentList) => [
+      ...currentList.map((item) => ({ ...item, isNew: false })),
       {
         id: generateId(),
-        value,
+        value: "",
+        isNew: true,
       },
     ]);
   };
@@ -31,8 +39,13 @@ const Tasks = () => {
   }, [allTasks]);
   return (
     <>
-      <Form addTask={addTask} />
-      <TasksList allTasks={list} removeTask={removeTask} />
+      <button onClick={addListItem}>+ list item</button>
+
+      <TasksList
+        allTasks={list}
+        removeTask={removeTask}
+        updateTask={updateTask}
+      />
     </>
   );
 };
