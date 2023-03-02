@@ -1,24 +1,24 @@
 import { useState, useEffect } from "react";
 
 const useLocalStorage = () => {
-  const [allTasks, setAllTasks] = useState([]);
-  const [isSaving, setIsSaving] = useState(false);
+	const [allTasks, setAllTasks] = useState([]);
+	const [isSaving, setIsSaving] = useState(false);
 
-  useEffect(() => {
-    const savedTasks = JSON.parse(localStorage.getItem("tasks"));
-    if (savedTasks) {
-      setAllTasks(savedTasks);
-    }
-  }, []);
+	useEffect(() => {
+		const savedTasks = JSON.parse(localStorage.getItem("tasks"));
+		if (savedTasks) {
+			setAllTasks(savedTasks);
+		}
+	}, []);
 
-  useEffect(() => {
-    if (isSaving) {
-      localStorage.setItem("tasks", JSON.stringify(allTasks));
-      setIsSaving(false);
-    }
-  }, [isSaving]);
+	useEffect(() => {
+		if (isSaving) {
+			localStorage.setItem("tasks", JSON.stringify(allTasks));
+			setIsSaving(false);
+		}
+	}, [isSaving]);
 
-  return { allTasks, setAllTasks, isSaving, setIsSaving };
+	return { allTasks, setAllTasks, isSaving, setIsSaving };
 };
 
 export default useLocalStorage;
