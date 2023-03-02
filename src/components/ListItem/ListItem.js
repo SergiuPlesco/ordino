@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Form from "../Form/Form";
 
-const ListItem = ({ task, addTask, removeTask }) => {
+const ListItem = ({ task, updateTask, removeTask }) => {
   const [isDeviding, setIsDeviding] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   return (
     <>
@@ -11,7 +12,23 @@ const ListItem = ({ task, addTask, removeTask }) => {
           display: "flex",
         }}
       >
-        <p>{task.value}</p>
+        {task.isNew || isEditing ? (
+          <Form
+            task={task}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+            updateTask={updateTask}
+          />
+        ) : (
+          <p
+            onClick={() => setIsEditing(true)}
+            style={{
+              width: "200px",
+            }}
+          >
+            {task.value}
+          </p>
+        )}
         {!isDeviding && (
           <button onClick={() => setIsDeviding(true)}>devide </button>
         )}
@@ -22,7 +39,7 @@ const ListItem = ({ task, addTask, removeTask }) => {
           <button onClick={() => setIsDeviding(false)}>cancel</button>
         )}
       </li>
-      {isDeviding && <Form addTask={addTask} />}
+      {/* {isDeviding && <Form addTask={addTask} />} */}
     </>
   );
 };
