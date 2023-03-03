@@ -16,10 +16,10 @@ const Form = ({ updateTask, task, isEditing, setIsEditing }) => {
 
   const handleBlur = (e) => {
     e.preventDefault();
-
     updateTask(task.id, e.target.value);
     setIsEditing(false);
   };
+
   useEffect(() => {
     if (task.isNew) {
       inputRef.current.focus();
