@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const Form = ({ updateTask, task, isEditing, setIsEditing }) => {
-	const [value, setValue] = useState(task.value);
+const Form = ({ updateTask, text, isEditing, setIsEditing }) => {
+	const [value, setValue] = useState(text);
 	const inputRef = useRef(null);
 
 	const handleChange = (e) => {
@@ -10,27 +10,25 @@ const Form = ({ updateTask, task, isEditing, setIsEditing }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		updateTask(task.id, value);
 		setIsEditing(false);
 	};
 
 	const handleBlur = (e) => {
 		e.preventDefault();
-		updateTask(task.id, e.target.value);
 		setIsEditing(false);
 	};
 
 	useEffect(() => {
-		if (task.isNew) {
-			inputRef.current.focus();
-		}
+		// if (task.isNew) {
+		// 	inputRef.current.focus();
+		// }
 		if (isEditing) {
 			inputRef.current.focus();
 		}
 	}, [isEditing]);
 
 	return (
-		<form>
+		<>
 			<input
 				ref={inputRef}
 				type="text"
@@ -42,10 +40,8 @@ const Form = ({ updateTask, task, isEditing, setIsEditing }) => {
 					width: "200px",
 				}}
 			/>
-			<button type="submit" onClick={handleSubmit}>
-				save
-			</button>
-		</form>
+			<button onClick={handleSubmit}>save</button>
+		</>
 	);
 };
 
