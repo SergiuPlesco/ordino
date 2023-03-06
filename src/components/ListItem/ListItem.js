@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Form from "../Form/Form";
-import TasksList from "../TasksList/TasksList";
+import TasksList from "../../containers/BoardItem/BoardItem";
 
-const ListItem = ({ task, updateTask, removeTask, addListToItem }) => {
+const BoardItem = ({ task, updateTask, removeTask, addListToItem }) => {
 	const [isDeviding, setIsDeviding] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
 
@@ -39,9 +39,9 @@ const ListItem = ({ task, updateTask, removeTask, addListToItem }) => {
 				{!isDeviding && <button onClick={() => removeTask(task.id)}>delete </button>}
 				{isDeviding && <button onClick={() => setIsDeviding(false)}>cancel</button>}
 			</li>
-			{isDeviding && <TasksList list={task.steps} />}
+			{isDeviding && <TasksList list={task.steps} updateTask={updateTask} />}
 		</>
 	);
 };
 
-export default ListItem;
+export default BoardItem;
