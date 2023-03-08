@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Form from "../Form/Form";
+import styles from "./BoardTitle.module.css";
 
 const BoardTitle = ({ item, saveBoardTitle }) => {
 	const [isEditing, setIsEditing] = useState(false);
@@ -9,7 +10,7 @@ const BoardTitle = ({ item, saveBoardTitle }) => {
 	};
 
 	return (
-		<>
+		<div className={styles.container}>
 			{isEditing || item.isNew ? (
 				<Form
 					item={item}
@@ -20,7 +21,7 @@ const BoardTitle = ({ item, saveBoardTitle }) => {
 			) : (
 				<h5 onClick={handleEditing}>{item.title}</h5>
 			)}
-		</>
+		</div>
 	);
 };
 

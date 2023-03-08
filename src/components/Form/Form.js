@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 
 const Form = ({ item, saveBoardTitle, isEditing, setIsEditing }) => {
-	const [value, setValue] = useState(item.value);
+	const [value, setValue] = useState(item.title);
 	const inputRef = useRef(null);
 
 	const handleChange = (e) => {
@@ -38,9 +38,6 @@ const Form = ({ item, saveBoardTitle, isEditing, setIsEditing }) => {
 				value={value}
 				onChange={handleChange}
 				onBlur={handleBlur}
-				style={{
-					width: "200px",
-				}}
 			/>
 			<button onClick={handleSubmit}>save</button>
 		</>
