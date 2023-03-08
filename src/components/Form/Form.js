@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const Form = ({ updateTask, text, isEditing, setIsEditing }) => {
-	const [value, setValue] = useState(text);
+const Form = ({ item, saveBoardTitle, isEditing, setIsEditing }) => {
+	const [value, setValue] = useState(item.value);
 	const inputRef = useRef(null);
 
 	const handleChange = (e) => {
@@ -11,17 +11,19 @@ const Form = ({ updateTask, text, isEditing, setIsEditing }) => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setIsEditing(false);
+		saveBoardTitle(item.id, value);
 	};
 
 	const handleBlur = (e) => {
 		e.preventDefault();
 		setIsEditing(false);
+		saveBoardTitle(item.id, value);
 	};
 
 	useEffect(() => {
-		// if (task.isNew) {
-		// 	inputRef.current.focus();
-		// }
+		if (item.isNew) {
+			inputRef.current.focus();
+		}
 		if (isEditing) {
 			inputRef.current.focus();
 		}
