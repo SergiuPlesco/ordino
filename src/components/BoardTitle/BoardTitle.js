@@ -19,7 +19,15 @@ const BoardTitle = ({ item, saveBoardTitle }) => {
 					saveBoardTitle={saveBoardTitle}
 				/>
 			) : (
-				<h5 onClick={handleEditing}>{item.title}</h5>
+				<h5
+					style={{
+						width: "100%",
+						cursor: "pointer",
+					}}
+					onClick={handleEditing}
+				>
+					{item.title}
+				</h5>
 			)}
 		</div>
 	);

@@ -1,4 +1,17 @@
 .container {
-	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+	display: flex;
 	width: 100%;
+}
+
+/* input */
+.noBorder {
+	border: none;
+	font-family: inherit;
+	font-weight: 700;
+	font-size: 0.83em;
+	width: 100%;
+}
+
+.noBorder:focus {
+	outline: none;
 }

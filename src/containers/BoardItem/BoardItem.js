@@ -5,40 +5,51 @@ import BoardTitle from "@/components/BoardTitle/BoardTitle";
 const BoardItem = ({ item, saveBoardTitle, removeBoardItem }) => {
 	return (
 		<div
+			// board container
 			style={{
 				border: "0.01rem solid rgba(0,0,0,0.5)",
 				borderRadius: "3px",
-				padding: "1rem",
 			}}
 		>
 			<div
+				// board title container
 				style={{
 					display: "flex",
 					justifyContent: "space-between",
 					alignItems: "center",
+					borderBottom: "1px solid rgba(0,0,0, 0.2)",
+					padding: "1rem",
 				}}
 			>
 				<BoardTitle item={item} saveBoardTitle={saveBoardTitle} />
 				<Button onClick={removeBoardItem(item.id)}>x</Button>
 			</div>
-			<ol
+
+			<div
+				// board body container
 				style={{
-					paddingLeft: "1rem",
+					padding: "1rem",
 				}}
 			>
-				<li>
-					go to work <button>update</button>
-					<button>delete</button>
-				</li>
-				<li>
-					greet everyone<button>update</button>
-					<button>delete</button>
-				</li>
-				<li>
-					start working<button>update</button>
-					<button>delete</button>
-				</li>
-			</ol>
+				<ol
+					style={{
+						paddingLeft: "1rem",
+					}}
+				>
+					<li>
+						go to work <button>update</button>
+						<button>delete</button>
+					</li>
+					<li>
+						greet everyone<button>update</button>
+						<button>delete</button>
+					</li>
+					<li>
+						start working<button>update</button>
+						<button>delete</button>
+					</li>
+				</ol>
+			</div>
 		</div>
 	);
 };
