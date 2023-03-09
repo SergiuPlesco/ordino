@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
+import styles from "@/components/BoardTitle/BoardTitle.module.css";
 
 const Form = ({ item, saveBoardTitle, isEditing, setIsEditing }) => {
-	const [value, setValue] = useState(item.value);
+	const [value, setValue] = useState(item.title);
 	const inputRef = useRef(null);
 
 	const handleChange = (e) => {
@@ -32,15 +33,13 @@ const Form = ({ item, saveBoardTitle, isEditing, setIsEditing }) => {
 	return (
 		<>
 			<input
+				className={styles.noBorder}
 				ref={inputRef}
 				type="text"
 				name="task"
 				value={value}
 				onChange={handleChange}
 				onBlur={handleBlur}
-				style={{
-					width: "200px",
-				}}
 			/>
 			<button onClick={handleSubmit}>save</button>
 		</>

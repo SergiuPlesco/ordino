@@ -8,11 +8,13 @@ const Board = () => {
 	const { value, setValue, setIsSaving } = useLocalStorage();
 	const [board, setBoard] = useState([]);
 
-	const saveBoardTitle = (id, title) => {
+	const saveBoardTitle = (id, value) => {
 		setIsSaving(true);
 		setValue((currentValue) => {
 			return [
-				...currentValue.map((item) => (item.id === id ? { ...item, title, isNew: false } : item)),
+				...currentValue.map((item) =>
+					item.id === id ? { ...item, title: value, isNew: false } : item
+				),
 			];
 		});
 	};
