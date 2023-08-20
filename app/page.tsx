@@ -8,9 +8,8 @@ import LoginButton from "@/components/LoginButton/LoginButton";
 
 export default function Home() {
 	const { data: sesssion } = useSession();
-	if (!sesssion) {
+	if (sesssion) {
 		console.log("no sesstion");
-		return null;
 	}
 	return (
 		<main className="flex flex-col items-center gap-2 mt-[150px]">
