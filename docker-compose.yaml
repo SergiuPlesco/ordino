@@ -3,7 +3,7 @@ version: "3.8"
 services:
   postgres:
     image: postgres:latest
-    container_name: postgres-db
+    container_name: postgres-db-ordino
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -15,7 +15,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4:latest
-    container_name: pgadmin
+    container_name: pgadmin-ordino
     environment:
       PGADMIN_DEFAULT_EMAIL: myemail@example.com
       PGADMIN_DEFAULT_PASSWORD: myadminpassword
