@@ -16,9 +16,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
   callbacks: {
     authorized({ request, auth }) {
+      const pathListRegex = /^(?!\/(features|about|pricing)$)\/\w+$/;
       const { pathname } = request.nextUrl;
-      if (pathname === "/middleware") return !!auth;
+
+      if (pathListRegex.test(pathname)) return !!auth;
       return true;
     },
+  },
+  pages: {
+    signIn: "/login",
   },
 });

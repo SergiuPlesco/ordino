@@ -3,13 +3,19 @@ import { signIn } from "@/auth";
 
 const SignInButton = ({
   provider,
+  callback,
   ...props
-}: { provider?: string } & React.ComponentPropsWithRef<typeof Button>) => {
+}: { provider?: string; callback: string } & React.ComponentPropsWithRef<
+  typeof Button
+>) => {
   return (
     <form
       action={async () => {
         "use server";
-        await signIn(provider);
+        await signIn(provider, {
+          redirect: true,
+          redirectTo: callback,
+        });
       }}
     >
       <Button {...props}>Sign In</Button>

@@ -5,6 +5,7 @@ const NavigationItems = [
   { href: "/features", name: "Features" },
   { href: "/about", name: "About" },
   { href: "/pricing", name: "Pricing" },
+  { href: "/dashboard", name: "Dashboard" },
 ];
 
 const NavigationList = () => {
