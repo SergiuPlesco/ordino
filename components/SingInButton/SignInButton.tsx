@@ -5,7 +5,7 @@ const SignInButton = ({
   provider,
   callback,
   ...props
-}: { provider?: string; callback: string } & React.ComponentPropsWithRef<
+}: { provider?: string; callback?: string } & React.ComponentPropsWithRef<
   typeof Button
 >) => {
   return (
