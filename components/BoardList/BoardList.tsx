@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { createPortal } from "react-dom";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import {
   createFormFactory,
   FormApi,
@@ -30,6 +30,7 @@ import {
 } from "@dnd-kit/sortable";
 import SortableItem from "./SortableItem";
 import { Item } from "./Item";
+import BoardTasksContainer from "./BoardTasksContainer/BoardTasksContainer";
 const Boards = [
   {
     id: 1,
@@ -52,16 +53,28 @@ const Boards = [
           { id: 2, value: "put the on", subtasks: [] },
         ],
       },
-      { id: 2, value: "Go out" },
-      { id: 3, value: "Get a bus to the supermarket" },
-      { id: 4, value: "take the milk" },
-      { id: 5, value: "pay for the milk" },
+      { id: 2, value: "Go out", subtasks: [] },
+      { id: 3, value: "Get a bus to the supermarket", subtasks: [] },
+      { id: 4, value: "take the milk", subtasks: [] },
+      { id: 5, value: "pay for the milk", subtasks: [] },
     ],
   },
   {
     id: 2,
     name: "Drink water",
-    tasks: [],
+    tasks: [
+      {
+        id: 1,
+        value: "Warm the water",
+        subtasks: [],
+      },
+      {
+        id: 2,
+        value: "Add salt",
+        subtasks: [],
+      },
+      { id: 3, value: "Stir to disolve the salt", subtasks: [] },
+    ],
   },
   {
     id: 3,
@@ -106,6 +119,10 @@ const TodoList = () => {
   const [activeId, setActiveId] = useState<any | null>(null);
   const [state, action] = useFormState<any, Person>(() => {},
   formFactory.initialFormState);
+
+  const searchParams = useSearchParams();
+  const isBoardTaskContainerOpen = searchParams.has("showBoardTask");
+  const boardId = searchParams.get("boardId");
 
   const { Provider, Field, handleSubmit, Subscribe, setFieldValue } =
     formFactory.useForm({
@@ -154,26 +171,25 @@ const TodoList = () => {
               mode="array"
               children={(todoField) => {
                 return (
-                  <>
-                    <div className="flex flex-col gap-6">
-                      <div>
-                        <Button
-                          type="button"
-                          onClick={() => {
-                            setItems((items) => [
-                              ...items,
-                              {
-                                id: items.length + 1,
-                                name: String(items.length + 1),
-                                tasks: [],
-                              },
-                            ]);
-                          }}
-                        >
-                          Create new board
-                        </Button>
-                      </div>
-
+                  <div className="flex flex-col gap-4">
+                    <div>
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          setItems((items) => [
+                            ...items,
+                            {
+                              id: items.length + 1,
+                              name: String(items.length + 1),
+                              tasks: [],
+                            },
+                          ]);
+                        }}
+                      >
+                        Create new board
+                      </Button>
+                    </div>
+                    <div className="flex gap-4">
                       <DndContext
                         id="boards"
                         onDragStart={(event) => {
@@ -203,41 +219,53 @@ const TodoList = () => {
                         }}
                         onDragCancel={() => setActiveId(null)}
                       >
-                        <SortableContext items={items}>
-                          <div className="flex flex-col gap-2">
-                            {items.map((item, i) => {
-                              return (
-                                <SortableItem
-                                  key={item.id}
-                                  id={item.id}
-                                  todoField={todoField}
-                                  value={item.name}
-                                  index={i}
+                        <div className="flex flex-col gap-6">
+                          <SortableContext id="BoardsFolders" items={items}>
+                            <div className="flex flex-col gap-2 w-[300px]">
+                              {items.map((item, i) => {
+                                return (
+                                  <SortableItem
+                                    key={item.id}
+                                    id={item.id}
+                                    todoField={todoField}
+                                    value={item.name}
+                                    index={i}
+                                  />
+                                );
+                              })}
+                            </div>
+                            <DragOverlay>
+                              {activeId ? (
+                                <Item
+                                  id={activeId}
+                                  value={
+                                    activeId
+                                      ? items.find(
+                                          (item) => item.id === activeId
+                                        )?.name
+                                      : -1
+                                  }
+                                  index={items.findIndex(
+                                    (item) => item.id === activeId
+                                  )}
+                                  dragOverlay
                                 />
-                              );
-                            })}
-                          </div>
-                        </SortableContext>
-                        <DragOverlay>
-                          {activeId ? (
-                            <Item
-                              id={activeId}
-                              value={
-                                activeId
-                                  ? items.find((item) => item.id === activeId)
-                                      ?.name
-                                  : -1
-                              }
-                              index={items.findIndex(
-                                (item) => item.id === activeId
-                              )}
-                              dragOverlay
-                            />
-                          ) : null}
-                        </DragOverlay>
+                              ) : null}
+                            </DragOverlay>
+                          </SortableContext>
+                        </div>
+                        {isBoardTaskContainerOpen && Number(boardId) && (
+                          <BoardTasksContainer
+                            boardId={boardId}
+                            tasks={
+                              items.find((item) => item.id === Number(boardId))
+                                ?.tasks
+                            }
+                          />
+                        )}
                       </DndContext>
                     </div>
-                  </>
+                  </div>
                 );
               }}
             />

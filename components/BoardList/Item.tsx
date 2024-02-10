@@ -53,16 +53,22 @@ export const Item = forwardRef(
       replace(`${pathname}?${params.toString()}`);
       buttonRef.current?.focus();
     };
+    const handleOpenBoardTasks = () => {
+      const params = new URLSearchParams(searchParams);
+      params.set("showBoardTask", "true");
+      params.set("boardId", String(id));
+      replace(`${pathname}?${params.toString()}`);
+    };
 
     return (
       <div
         ref={ref}
         style={style}
         className={cn(
-          "flex w-[300px] p-2 border rounded ",
-          dragOverlay ? "bg-white scale-105" : ""
+          "flex w-[300px] p-2 border rounded",
+          dragOverlay ? "bg-white scale-105" : "",
+          Number(boardId) === Number(id) ? "bg-purple-500" : ""
         )}
-        onClick={() => console.log("board", value)}
       >
         <div
           className="flex w-full items-center gap-2"
@@ -82,7 +88,7 @@ export const Item = forwardRef(
             </Button>
           </div>
           <div className="flex flex-1 justify-between items-center gap-2">
-            {isEditing && boardId === value ? (
+            {isEditing && Number(boardId) === Number(id) ? (
               <Input
                 id={value}
                 ref={(input) => input && input.focus()}
@@ -96,12 +102,18 @@ export const Item = forwardRef(
                 readOnly={dragOverlay}
               />
             ) : (
-              <p className="flex items-center px-3 py-1 h-9 text-sm leading-normal">
+              <p
+                onClick={() => {
+                  handleOpenBoardTasks();
+                  console.log("board", value);
+                }}
+                className="flex items-center rounded-md bg-fuchsia-300 w-full px-3 py-1 h-9 text-sm leading-normal hover:cursor-pointer"
+              >
                 {value}
               </p>
             )}
 
-            <ItemMenu value={value} inputRef={inputRef} />
+            <ItemMenu id={id} inputRef={inputRef} />
           </div>
         </div>
       </div>

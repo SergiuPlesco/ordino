@@ -9,14 +9,15 @@ import {
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { Settings2Icon } from "lucide-react";
 
-const ItemMenu = ({ value, inputRef }: any) => {
+const ItemMenu = ({ id, inputRef }: any) => {
   const { replace } = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
   const showInput = () => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("isEditing", "true");
-    params.set("boardId", value);
+    params.set("boardId", String(id));
     replace(`${pathname}?${params.toString()}`);
 
     inputRef.current?.focus();
