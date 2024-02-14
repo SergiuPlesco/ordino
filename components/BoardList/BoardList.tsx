@@ -31,92 +31,16 @@ import {
 import SortableItem from "./SortableItem";
 import { Item } from "./Item";
 import BoardTasksContainer from "./BoardTasksContainer/BoardTasksContainer";
-const Boards = [
-  {
-    id: 1,
-    name: "Buy milk",
-    tasks: [
-      {
-        id: 1,
-        value: "Get dressed",
-        subtasks: [
-          {
-            id: 1,
-            value: "Take the clothes from wardrobe",
-            subtasks: [
-              {
-                id: 1,
-                value: "",
-              },
-            ],
-          },
-          { id: 2, value: "put the on", subtasks: [] },
-        ],
-      },
-      { id: 2, value: "Go out", subtasks: [] },
-      { id: 3, value: "Get a bus to the supermarket", subtasks: [] },
-      { id: 4, value: "take the milk", subtasks: [] },
-      { id: 5, value: "pay for the milk", subtasks: [] },
-    ],
-  },
-  {
-    id: 2,
-    name: "Drink water",
-    tasks: [
-      {
-        id: 1,
-        value: "Warm the water",
-        subtasks: [],
-      },
-      {
-        id: 2,
-        value: "Add salt",
-        subtasks: [],
-      },
-      { id: 3, value: "Stir to disolve the salt", subtasks: [] },
-    ],
-  },
-  {
-    id: 3,
-    name: "Eat food",
-    tasks: [],
-  },
-  {
-    id: 4,
-    name: "Go out",
-    tasks: [],
-  },
-];
-
-type Board = {
-  id: number;
-  name: string;
-  tasks: Tasks[];
-};
-type Tasks = {
-  id: number;
-  value: string;
-  subtasks?: Subtasks[];
-};
-type Subtasks = {
-  id: number;
-  value: string;
-  subtasks?: Subtasks[];
-};
-type Person = {
-  firstName: string;
-  boards: Board[];
-};
+import generateId from "@/utils/generateId";
+import { PERSON } from "../../constants/testData";
+import { Person, Board } from "@/types/types";
 
 const TodoList = () => {
   const formFactory = createFormFactory<Person>({
-    defaultValues: {
-      firstName: "Sergiu",
-      boards: Boards,
-    },
+    defaultValues: PERSON,
   });
-  const [items, setItems] = useState<Board[]>(Boards);
-  const [activeId, setActiveId] = useState<any | null>(null);
+  const [items, setItems] = useState<Board[]>(PERSON.boards);
+  const [activeId, setActiveId] = useState<number | null>(null);
   const [state, action] = useFormState<any, Person>(() => {},
   formFactory.initialFormState);
 
@@ -179,7 +103,7 @@ const TodoList = () => {
                           setItems((items) => [
                             ...items,
                             {
-                              id: items.length + 1,
+                              id: Number(items.slice(-1)[0].id + 1),
                               name: String(items.length + 1),
                               tasks: [],
                             },
@@ -198,7 +122,7 @@ const TodoList = () => {
                             setActiveId(null);
                           }
 
-                          setActiveId(() => active.id);
+                          setActiveId(() => active.id as number);
                         }}
                         onDragEnd={(event) => {
                           const { active, over } = event;
@@ -254,16 +178,13 @@ const TodoList = () => {
                             </DragOverlay>
                           </SortableContext>
                         </div>
-                        {isBoardTaskContainerOpen && Number(boardId) && (
-                          <BoardTasksContainer
-                            boardId={boardId}
-                            tasks={
-                              items.find((item) => item.id === Number(boardId))
-                                ?.tasks
-                            }
-                          />
-                        )}
                       </DndContext>
+                      {isBoardTaskContainerOpen && boardId && (
+                        <BoardTasksContainer
+                          boardId={Number(boardId)}
+                          boards={items}
+                        />
+                      )}
                     </div>
                   </div>
                 );

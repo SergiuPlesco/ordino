@@ -67,7 +67,7 @@ export const Item = forwardRef(
         className={cn(
           "flex w-[300px] p-2 border rounded",
           dragOverlay ? "bg-white scale-105" : "",
-          Number(boardId) === Number(id) ? "bg-purple-500" : ""
+          boardId === id ? "bg-purple-500" : ""
         )}
       >
         <div
